@@ -6,7 +6,7 @@ resolver = "2"
 
 [[bin]]
 name = "main"
-path = "src/main.rs"
+path = "api/main.rs"
 
 [dependencies]
 vercel_runtime = "2.1.0"

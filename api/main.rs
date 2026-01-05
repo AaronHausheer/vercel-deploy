@@ -90,7 +90,7 @@ async fn movies_json_handler() -> Result<Json<Vec<Movie>>, StatusCode> {
 
 async fn get_movies() -> Result<Vec<Movie>, reqwest::Error> {
     let supabase_url = env::var("SUPABASE_URL").expect("missing SUPABASE_URL");
-    let supabase_key = env::var("SUPABASE_KEY").expect("missing SUPABASE_KEY");
+    let supabase_key = env::var("SUPABASE_ANON_KEY").expect("missing SUPABASE_ANON_KEY");
 
     let url = format!(
         "{}/rest/v1/movies?select=*&limit={}&order=id.desc",
@@ -114,7 +114,7 @@ async fn create_movie_handler(
     Json(payload): Json<CreateMovie>,
 ) -> Result<Json<Movie>, (StatusCode, String)> {
     let supabase_url = env::var("SUPABASE_URL").expect("missing SUPABASE_URL");
-    let supabase_key = env::var("SUPABASE_KEY").expect("missing SUPABASE_KEY");
+    let supabase_key = env::var("SUPABASE_ANON_KEY").expect("missing SUPABASE_ANON_KEY");
 
     let url = format!("{}/rest/v1/movies", supabase_url);
 
@@ -158,7 +158,7 @@ async fn update_movie_handler(
     Json(payload): Json<UpdateMovie>,
 ) -> Result<Json<Movie>, (StatusCode, String)> {
     let supabase_url = env::var("SUPABASE_URL").expect("missing SUPABASE_URL");
-    let supabase_key = env::var("SUPABASE_KEY").expect("missing SUPABASE_KEY");
+    let supabase_key = env::var("SUPABASE_ANON_KEY").expect("missing SUPABASE_ANON_KEY");
 
     let url = format!("{}/rest/v1/movies?id=eq.{}", supabase_url, id);
 
@@ -199,7 +199,7 @@ async fn update_movie_handler(
 
 async fn delete_movie_handler(Path(id): Path<i32>) -> Result<StatusCode, (StatusCode, String)> {
     let supabase_url = env::var("SUPABASE_URL").expect("missing SUPABASE_URL");
-    let supabase_key = env::var("SUPABASE_KEY").expect("missing SUPABASE_KEY");
+    let supabase_key = env::var("SUPABASE_ANON_KEY").expect("missing SUPABASE_ANON_KEY");
 
     let url = format!("{}/rest/v1/movies?id=eq.{}", supabase_url, id);
 
