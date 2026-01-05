@@ -62,11 +62,11 @@ async fn main() {
 }
 
 async fn index_handler() -> Html<String> {
-    Html(include_str!("index.html").to_string())
+    Html(include_str!("../public/index.html").to_string())
 }
 
 async fn about_handler() -> Html<String> {
-    Html(include_str!("about.html").to_string())
+    Html(include_str!("../public/about.html").to_string())
 }
 
 async fn root_handler() -> Json<ApiInfo> {
@@ -227,7 +227,7 @@ async fn delete_movie_handler(Path(id): Path<i32>) -> Result<StatusCode, (Status
 }
 
 async fn movies_html_handler() -> Html<String> {
-    Html(include_str!("movie.html").to_string())
+    Html(include_str!("../public/movie.html").to_string())
 }
 
 async fn log_requests(req: Request, next: Next) -> Result<Response, StatusCode> {
