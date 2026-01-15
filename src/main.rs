@@ -54,10 +54,12 @@ async fn main() {
         .fallback(not_found_handler)
         .layer(middleware::from_fn(log_requests));
 
-    let port = env::var("PORT")
-        .unwrap_or_else(|_| "8000".to_string())
-        .parse::<u16>()
-        .unwrap_or(8000);
+        let port = env::var("PORT")
+        .or_else(|_| env::var("RAILWAY_PORT"))
+        .or_else(|_| env::var("RAILWAY_TCP_PORT"))
+        .ok()
+        .and_then(|value| value.trim().parse::<u16>().ok())
+        .unwrap_or(8080);
     let bind_address = format!("0.0.0.0:{}", port);
     let listener = tokio::net::TcpListener::bind(&bind_address)
         .await
