@@ -45,6 +45,7 @@ async fn main() {
     let app = Router::new()
         .route("/", get(index_handler))
         .route("/about", get(about_handler))
+        .route("/movie", get(movies_html_handler))
         .route("/movies", get(movies_html_handler).post(create_movie_handler))
         .route("/movies/:id", put(update_movie_handler).delete(delete_movie_handler))
         .route("/movies.json", get(movies_json_handler))
@@ -52,7 +53,7 @@ async fn main() {
         .fallback(not_found_handler)
         .layer(middleware::from_fn(log_requests));
 
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:8000")
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8000")
         .await
         .unwrap();
 
