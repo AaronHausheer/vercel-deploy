@@ -11,6 +11,7 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::env;
 
+#[path = "../src/movie.rs"]
 mod movie;
 use movie::Movie;
 
@@ -53,11 +54,17 @@ async fn main() {
         .fallback(not_found_handler)
         .layer(middleware::from_fn(log_requests));
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:8000")
+    let port = env::var("PORT")
+        .unwrap_or_else(|_| "8000".to_string())
+        .parse::<u16>()
+        .unwrap_or(8000);
+    let bind_address = format!("0.0.0.0:{}", port);
+    let listener = tokio::net::TcpListener::bind(&bind_address)
         .await
         .unwrap();
 
-    println!("Server running → http://localhost:8000");
+
+    println!("Server running → http://localhost:{}", port);
 
     axum::serve(listener, app).await.unwrap();
 }
